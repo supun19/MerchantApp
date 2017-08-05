@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1a237e</color>
+    <color name="colorPrimaryDark">#a0a0a0</color>
+    <color name="colorAccent">#3f51b5</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="gray">#111111</color>
+    <color name="amountColor">#881111</color>
+    <color name="navHeadColor">#f54f2e</color>
+    <color name="btn_back">#DCDCDC</color>
+    <color name="button_pressed">#0277BD</color>
+    <color name="button_focused">#03A9F4</color>
+    <color name="button_default">#81D4FA</color>
+    <color name="blueviolet">#8A2BE2</color>
+    <color name="mediumseagreen">#3CB371</color>
+    <color name="succss_msg">#1B5E20</color>
+</resources>
