@@ -3,4 +3,8 @@
     <string name="login_hint">password</string>
     <string name="forget_password">Forgot Password?</string>
     <string name="login">LOGIN</string>
+
+    //store data
+    <string name="access_token">1</string>
+    <string name="register">2</string>
 </resources>
