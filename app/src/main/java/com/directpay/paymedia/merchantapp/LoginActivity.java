@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     btn_login.setEnabled(true);
                     //v.setVisibility(View.VISIBLE);
                 }
-            }, Parameter.loginMerchantUrl,"",params,getApplicationContext());
+            }, Parameter.urlMerchantLogin,"",params,getApplicationContext());
 
            /*JSONObject detailLogin = getLoginDetail();
 
@@ -184,26 +184,6 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//        if(result.has("access_token")){
-//            Api.setAccessToken(getApplicationContext(),result.opt("access_token").toString());
-//            Log.d("accesstoken",Api.getAccessToken(getApplicationContext()));
-//            //login successs go totransaction
-//            Log.d("loginActivity",""+Api.isMerchant(getApplicationContext()));
-//            Toast.makeText(getApplicationContext(),"logged in",Toast.LENGTH_LONG).show();
-//            btn_login.setEnabled(true);
-//            passField.setText(null);
-//
-//            //TODO success login
-//                moveDashboard();
-//
-//            if(Api.isFirstTimeLogin(getApplicationContext())){
-//                Api.setFirstTimeLogin(getApplicationContext(),nicField.getText().toString());
-//
-//            }
-//        }
-//        else {
-//            Toast.makeText(getApplicationContext(),"No Access Token in Response",Toast.LENGTH_LONG).show();
-//        }
         }
     }
 

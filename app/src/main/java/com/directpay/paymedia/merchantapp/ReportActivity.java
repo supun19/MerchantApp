@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -42,6 +45,14 @@ public class ReportActivity extends AppCompatActivity {
     private int fYear, fMonth, fDay;
     private int tYear, tMonth, tDay;
 
+    private boolean selectDate;
+    private boolean selectAccount;
+
+    private EditText searchView_account;
+    private MerchantTransactionAdapter adapter;
+    private ListView listView;
+    private boolean loadDate;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +79,16 @@ public class ReportActivity extends AppCompatActivity {
         TextView date_header = (TextView) findViewById(R.id.date_header);
         TextView detail_header = (TextView)findViewById(R.id.detail_header);
         TextView amount_header = (TextView)findViewById(R.id.amount_header);
+        listView = (ListView) findViewById(R.id.merchantTransactionList);
+
+        searchView_account = (EditText) findViewById(R.id.search_box);
+
 
         text_from_date = (TextView) findViewById(R.id.txt_from);
         text_to_date = (TextView) findViewById(R.id.txt_todate);
 
         btn_load = (Button) findViewById(R.id.btn_load);
-       
+
         date_header.setWidth(headersize);
         detail_header.setWidth(headersize);
         amount_header.setWidth(headersize);
@@ -94,11 +109,14 @@ public class ReportActivity extends AppCompatActivity {
         btn_load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listView.setAdapter(null);
                 getMerchantTransaction();
+
 
             }
         });
+        Search();
+        currentDate();
 
 
 
@@ -113,11 +131,15 @@ public class ReportActivity extends AppCompatActivity {
             fromdate.put("year",fYear);
             fromdate.put("month",fMonth);
             fromdate.put("day",fDay);
-
             JSONObject todate = new JSONObject();
+            if(fYear == tYear && fMonth==tMonth && fDay == tDay){
+                getnextDay(fYear,fMonth,fDay);
+            }
+
             todate.put("year",tYear);
             todate.put("month",tMonth);
             todate.put("day",tDay);
+
 
             parameter.put("fromDate",fromdate);
             parameter.put("toDate",todate);
@@ -156,6 +178,7 @@ public class ReportActivity extends AppCompatActivity {
                     JSONObject jsonObject = array.getJSONObject(0);
                     Log.d("Transaction:Transaction",jsonObject.toString());
                     populateTransactionList(array);
+                    loadDate=true;
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"No Any Transaction",Toast.LENGTH_LONG).show();
@@ -194,9 +217,8 @@ public class ReportActivity extends AppCompatActivity {
         // Construct the data source
         final ArrayList<MerchantTransactionModel> arrayOfTrnsactions = MerchantTransactionModel.getTransaction(transactions,Api.getRegisterId(getApplicationContext()));
         // Create the adapter to convert the array to views
-        MerchantTransactionAdapter adapter = new MerchantTransactionAdapter(this, arrayOfTrnsactions,headersize);
+        adapter = new MerchantTransactionAdapter(this, arrayOfTrnsactions,headersize);
         // Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.merchantTransactionList);
         listView.setAdapter(adapter);
 
 
@@ -300,12 +322,59 @@ public class ReportActivity extends AppCompatActivity {
 
     }
 
-    public void currentDAte(){
+
+    private void Search() {
+        // Capture Text in EditText
+        searchView_account.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                if(loadDate){
+                    ReportActivity.this.adapter.getFilter().filter(cs);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"Load Transaction First",Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+    }
+    public void currentDate(){
         // Get Current Date
         final Calendar c = Calendar.getInstance();
+        fYear =  c.get(Calendar.YEAR);
+        fMonth = c.get(Calendar.MONTH) + 1;
+        fDay = c.get(Calendar.DAY_OF_MONTH);
 
-        text_to_date.setText(c.get(Calendar.DAY_OF_MONTH) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
-        text_from_date.setText(c.get(Calendar.DAY_OF_MONTH) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
+        tYear =  c.get(Calendar.YEAR);
+        tMonth = c.get(Calendar.MONTH) + 1;
+        tDay = c.get(Calendar.DAY_OF_MONTH);
+
+        text_to_date.setText(fDay + "-" + fMonth + "-" + fYear);
+        text_from_date.setText(tDay + "-" + tMonth + "-" + tYear);
+    }
+    public void getnextDay(int year,int month,int day){
+
+        final Calendar c = Calendar.getInstance();
+        c.set(year,month,day);
+        c.add(Calendar.DATE,+1);
+        tYear = c.get(Calendar.YEAR);
+        tMonth = c.get(Calendar.MONTH)+1;
+        tDay = c.get(Calendar.DAY_OF_MONTH);
     }
 
 }

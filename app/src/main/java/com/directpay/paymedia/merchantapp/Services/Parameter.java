@@ -39,6 +39,7 @@ public class Parameter {
     public static String urlForgotPassword = apim+"/merchantpay/1.0.0/forgot/password";
     public static String urlMerchantChangePassword = apim+"/merchantpay/1.0.0/merchant/change/password";
     public static String urlMerchantChangeUsername = apim+"/merchantpay/1.0.0/merchant/change/username";
+    public static String  urlMerchantLogin = apim+"/merchantpay/1.0.0/merchant/login";
     //private String url = "https://192.168.8.102:8243/mobilepay/1.0.0/register";
     //authenticate crential
 

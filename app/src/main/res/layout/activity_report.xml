@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.directpay.paymedia.merchantapp.ReportActivity"
     android:padding="16dp"
-    android:background="@color/colorPrimaryDark">
+    >
 
     <include layout="@layout/content_report" />
 </android.support.constraint.ConstraintLayout>

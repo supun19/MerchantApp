@@ -32,15 +32,26 @@
         android:gravity="center"/>
 </LinearLayout>
 
-    <SearchView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="search"
-        android:background="@drawable/searchbox_border"
+        android:orientation="horizontal"
+        android:focusableInTouchMode="true">
 
-        >
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search By Account"
+                android:id="@+id/search_box"
+                android:focusableInTouchMode="true"
 
-    </SearchView>
+                />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
