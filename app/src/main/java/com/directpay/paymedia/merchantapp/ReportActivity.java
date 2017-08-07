@@ -1,5 +1,7 @@
 package com.directpay.paymedia.merchantapp;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +10,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.directpay.paymedia.merchantapp.Component.MerchantTransactionAdapter;
@@ -25,11 +30,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ReportActivity extends AppCompatActivity {
 
     private int headersize;
+    private Button btn_load;
+    private TextView text_from_date;
+    private TextView text_to_date;
+    private int mYear, mMonth, mDay;
+    private int fYear, fMonth, fDay;
+    private int tYear, tMonth, tDay;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SecurityHandler.handleSSLHandshake();
@@ -54,26 +68,56 @@ public class ReportActivity extends AppCompatActivity {
         TextView date_header = (TextView) findViewById(R.id.date_header);
         TextView detail_header = (TextView)findViewById(R.id.detail_header);
         TextView amount_header = (TextView)findViewById(R.id.amount_header);
+
+        text_from_date = (TextView) findViewById(R.id.txt_from);
+        text_to_date = (TextView) findViewById(R.id.txt_todate);
+
+        btn_load = (Button) findViewById(R.id.btn_load);
+       
         date_header.setWidth(headersize);
         detail_header.setWidth(headersize);
         amount_header.setWidth(headersize);
 
-        getMerchantTransaction();
+        text_from_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFromDate();
+            }
+        });
+        text_to_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setToDate(
+                );
+            }
+        });
+        btn_load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getMerchantTransaction();
+
+            }
+        });
+
+
 
     }
     public void getMerchantTransaction() {
+
+
         JSONObject parameter = new JSONObject();
         try {
             parameter.put("userId",""+ Api.getRegisterId(getApplicationContext()));
             JSONObject fromdate = new JSONObject();
-            fromdate.put("year",2017);
-            fromdate.put("month",1);
-            fromdate.put("day",1);
+            fromdate.put("year",fYear);
+            fromdate.put("month",fMonth);
+            fromdate.put("day",fDay);
 
             JSONObject todate = new JSONObject();
-            todate.put("year",2018);
-            todate.put("month",6);
-            todate.put("day",22);
+            todate.put("year",tYear);
+            todate.put("month",tMonth);
+            todate.put("day",tDay);
 
             parameter.put("fromDate",fromdate);
             parameter.put("toDate",todate);
@@ -83,6 +127,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
         VolleyRequestHandlerApi.api(new VolleyCallback(){
+
 
 
             @Override
@@ -191,4 +236,76 @@ public class ReportActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void setToDate() {
+
+
+
+            // Get Current Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            tYear = year;
+                            tMonth = monthOfYear+1;
+                            tDay = dayOfMonth;
+
+                            text_to_date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+
+
+    }
+
+
+
+    public void setFromDate() {
+
+
+
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        fYear = year;
+                        fMonth = monthOfYear+1;
+                        fDay = dayOfMonth;
+
+                        text_from_date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+
+
+    }
+
+    public void currentDAte(){
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+
+        text_to_date.setText(c.get(Calendar.DAY_OF_MONTH) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
+        text_from_date.setText(c.get(Calendar.DAY_OF_MONTH) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.YEAR));
+    }
+
 }

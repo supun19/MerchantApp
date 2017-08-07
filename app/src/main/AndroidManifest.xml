@@ -35,7 +35,10 @@
         <activity android:name=".DashboardActivity" />
         <activity android:name=".MyQrActivity" />
         <activity android:name=".ReportActivity" />
-        <activity android:name=".TransactionDetailActivity"></activity>
+        <activity android:name=".TransactionDetailActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".ChangeUserActivity"></activity>
     </application>
 
 </manifest>

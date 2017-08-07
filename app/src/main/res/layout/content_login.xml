@@ -38,8 +38,7 @@
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:maxLength="10"
+                    android:inputType="text"
                     android:ems="10"
                     android:id="@+id/login_nic"
                     android:text=""
@@ -50,7 +49,7 @@
                     android:textCursorDrawable="@color/colorPrimary"
                     android:textColor="@color/colorAccent"
                     android:focusable="true"
-                    android:hint="nic"
+                    android:hint="username"
                     android:layout_marginTop="10dp"
                     android:textColorHint="@color/colorPrimary"
                     />
@@ -62,7 +61,7 @@
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberPassword"
+                    android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/login_pin"
                     android:text=""

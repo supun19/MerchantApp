@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        nicValidation(nicField);
+        ///nicValidation(nicField);
         if(!Api.isFirstTimeLogin(getApplicationContext())){
             nicField.setVisibility(View.GONE);
             nicLayout.setVisibility(View.GONE);
@@ -138,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     private JSONObject getLoginCredential(){
         JSONObject params=new JSONObject();
+
         try {
             params.put("grant_type","password");
             if(Api.isFirstTimeLogin(getApplicationContext())){

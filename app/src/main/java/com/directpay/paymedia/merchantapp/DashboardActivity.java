@@ -21,6 +21,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         Button button_my_qr = (Button) findViewById(R.id.btn_my_qr);
         Button button_transaction_report = (Button) findViewById(R.id.btn_transaction_report);
+        Button button_setting = (Button) findViewById(R.id.btn_setting);
+        Button button_day_end = (Button) findViewById(R.id.btn_day_end_process);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -45,6 +47,21 @@ public class DashboardActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(DashboardActivity.this,ReportActivity.class);
                 startActivity(intent);
+            }
+        });
+        button_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashboardActivity.this,SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button_day_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
             }
         });
     }
