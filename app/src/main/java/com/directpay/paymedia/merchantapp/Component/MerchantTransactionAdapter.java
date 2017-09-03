@@ -131,7 +131,7 @@ public class MerchantTransactionAdapter extends ArrayAdapter<MerchantTransaction
 //                    filterableString = list.get(i).getFromAccountNumber();
 //                }
 
-                if (filterableString.toLowerCase().contains(filterString)) {
+                if (filterableString.toLowerCase().contains(filterString.toLowerCase())) {
                     nlist.add(model);
                 }
             }
