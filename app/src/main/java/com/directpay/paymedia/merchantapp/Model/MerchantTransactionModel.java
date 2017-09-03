@@ -24,7 +24,8 @@ public class MerchantTransactionModel {
     private String recieptNumber;
     private String type;
     private String status;
-
+    private User user;
+    private boolean isOtherAccountOwnerRoleIsMerchant;
     public boolean merchantTo;
 
     private boolean appUserAccount_isFromAccountNuber;
@@ -59,31 +60,39 @@ public class MerchantTransactionModel {
                 //this.fromAccountRole = getRole(object.getJSONObject("payerDetail"));
                 if(this.appUserAccount_isFromAccountNuber){
                     JSONObject payeeDetaildata = object.getJSONObject("payeeDetail");
-                    JSONArray data = payeeDetaildata.getJSONArray("data");
-                    JSONObject payeeDetail = data.getJSONObject(0);
+                    JSONArray payeeData = payeeDetaildata.getJSONArray("data");
+                    JSONObject payeeDetail = payeeData.getJSONObject(0);
+                    JSONObject payerDetaildata = object.getJSONObject("payerDetail");
+                    JSONArray payerData = payerDetaildata.getJSONArray("data");
+                    JSONObject payerDetail = payerData.getJSONObject(0);
 
-                    Merchant merchantTemp = new Merchant(payeeDetail.getString("id"));
-                    if(payeeDetail.getJSONArray("roles").get(0).equals("merchant")){
-                        merchantTemp.setMerchantName(payeeDetail.getString("merchantName"));
-                    }
-                    else{
-                        merchantTemp.setMerchantName(payeeDetail.getString("username"));
-                    }
-                    this.merchant = merchantTemp;
+                    this.merchant = new Merchant(payerDetail.getString("id"));
+                    this.merchant.setMerchantName(payerDetail.getString("merchantName"));
+                    this.user = new User();
+                    this.user.setFirstname(payeeDetaildata.getString("firstName"));
+                    this.user.setLastName(payeeDetaildata.getString("lastName"));
+
+
+
+
                 }
                 else{
-                    JSONObject payeeDetaildata = object.getJSONObject("payerDetail");
-                    JSONArray data = payeeDetaildata.getJSONArray("data");
-                    JSONObject payeeDetail = data.getJSONObject(0);
+                    JSONObject payerDetaildata = object.getJSONObject("payerDetail");
+                    JSONArray payerData = payerDetaildata.getJSONArray("data");
+                    JSONObject payerDetail = payerData.getJSONObject(0);
 
-                    Merchant merchantTemp = new Merchant(payeeDetail.getString("id"));
-                    if(payeeDetail.getJSONArray("roles").get(0).equals("merchant")){
-                        merchantTemp.setMerchantName(payeeDetail.getString("merchantName"));
-                    }
-                    else{
-                        merchantTemp.setMerchantName(payeeDetail.getString("username"));
-                    }
-                    this.merchant = merchantTemp;
+                    JSONObject payeeDetaildata = object.getJSONObject("payeeDetail");
+                    JSONArray payeeData = payeeDetaildata.getJSONArray("data");
+                    JSONObject payeeDetail = payeeData.getJSONObject(0);
+
+
+                    this.merchant = new Merchant(payeeDetail.getString("id"));
+                    this.merchant.setMerchantName(payeeDetail.getString("merchantName"));
+                    this.user = new User();
+                    this.user.setFirstname(payerDetaildata.getString("firstName"));
+                    this.user.setLastName(payerDetaildata.getString("lastName"));
+
+
                 }
 
 //
@@ -134,6 +143,30 @@ public class MerchantTransactionModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isOtherAccountOwnerRoleIsMerchant() {
+        return isOtherAccountOwnerRoleIsMerchant;
+    }
+
+    public void setOtherAccountOwnerRoleIsMerchant(boolean otherAccountOwnerRoleIsMerchant) {
+        isOtherAccountOwnerRoleIsMerchant = otherAccountOwnerRoleIsMerchant;
+    }
+
+    public boolean isMerchantTo() {
+        return merchantTo;
+    }
+
+    public void setMerchantTo(boolean merchantTo) {
+        this.merchantTo = merchantTo;
     }
 
     public Merchant getMerchant() {

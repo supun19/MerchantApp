@@ -2,6 +2,7 @@ package com.directpay.paymedia.merchantapp.Component;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,12 +69,10 @@ public class MerchantTransactionAdapter extends ArrayAdapter<MerchantTransaction
 //        }
 
 
-        if(!transactionModel.isAppUserAccount_isFromAccountNuber()){
-            AccountNumber.setText(transactionModel.getFromAccountNumber());
-        }
-        else {
-            AccountNumber.setText(transactionModel.getToAccountNumber());
-        }
+
+        AccountNumber.setText(transactionModel.getUser().getLastName());
+
+        //Log.d("lastNAme",transactionModel.getUser().getLastName());
 
         Amount.setText(transactionModel.getAmount()+" LKR");
         Date.setText(transactionModel.getDate());
