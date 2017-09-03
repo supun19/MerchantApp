@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.directpay.paymedia.merchantapp.Component.VolleyCallback;
 import com.directpay.paymedia.merchantapp.Model.UserTransactionModel;
 import com.directpay.paymedia.merchantapp.Services.Api;
 import com.directpay.paymedia.merchantapp.Services.Parameter;
+import com.directpay.paymedia.merchantapp.Services.SecurityHandler;
 import com.directpay.paymedia.merchantapp.Services.VolleyRequestHandlerApi;
 
 import org.json.JSONException;
@@ -36,7 +38,16 @@ public class TransactionDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SecurityHandler.handleSSLHandshake();
         setContentView(R.layout.activity_transaction_detail);
+
+        if (getSupportActionBar() != null) {
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            //populateScanList();
+
+        }
 
         final Intent intent = getIntent();
         recieptNumber = intent.getStringExtra("receipt");
@@ -78,9 +89,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     refundTransaction(merchantId,recieptNumber);
-                    Intent intent = new Intent(TransactionDetailActivity.this,ReportActivity.class);
-                    startActivity(intent);
-                    finish();
+
 
                 }
             });
@@ -111,6 +120,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject result) {
                 Log.d("transactionAdapt",result.toString());
+                moveMerchantTransactionReport();
+
             }
 
             @Override
@@ -133,7 +144,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //moveLogin();
+
         moveMerchantTransactionReport();
         finish();
 
@@ -148,5 +159,22 @@ public class TransactionDetailActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, ReportActivity.class);
         this.startActivity(myIntent);
         finish();
+    }
+
+    private void moveDashBoard() {
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                moveDashBoard();
+                break;
+        }
+        return true;
     }
 }

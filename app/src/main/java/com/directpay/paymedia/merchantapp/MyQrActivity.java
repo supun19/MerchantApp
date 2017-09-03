@@ -1,13 +1,16 @@
 package com.directpay.paymedia.merchantapp;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.directpay.paymedia.merchantapp.Services.Api;
+import com.directpay.paymedia.merchantapp.Services.SecurityHandler;
 
 import net.glxn.qrgen.android.QRCode;
 
@@ -16,6 +19,7 @@ public class MyQrActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SecurityHandler.handleSSLHandshake();
         setContentView(R.layout.activity_my_qr);
         // add back arrow to toolbar
         if (getSupportActionBar() != null){
@@ -39,5 +43,24 @@ public class MyQrActivity extends AppCompatActivity {
             myImage.setImageBitmap(myBitmap);
         }
 
+    }
+    private void moveDashBoard() {
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        moveDashBoard();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                moveDashBoard();
+                break;
+        }
+        return true;
     }
 }

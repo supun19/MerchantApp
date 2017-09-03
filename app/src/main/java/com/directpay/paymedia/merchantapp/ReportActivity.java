@@ -10,12 +10,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -53,12 +55,22 @@ public class ReportActivity extends AppCompatActivity {
     private ListView listView;
     private boolean loadDate;
 
+
+    private RelativeLayout loadingbar;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SecurityHandler.handleSSLHandshake();
         setContentView(R.layout.activity_report);
+
+        if (getSupportActionBar() != null) {
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            //populateScanList();
+
+        }
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -88,6 +100,8 @@ public class ReportActivity extends AppCompatActivity {
         text_to_date = (TextView) findViewById(R.id.txt_todate);
 
         btn_load = (Button) findViewById(R.id.btn_load);
+        loadingbar = (RelativeLayout) findViewById(R.id.loadingPanel);
+        loadingbar.setVisibility(View.GONE);
 
         date_header.setWidth(headersize);
         detail_header.setWidth(headersize);
@@ -110,6 +124,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 listView.setAdapter(null);
+                loadingbar.setVisibility(View.VISIBLE);
                 getMerchantTransaction();
 
 
@@ -184,7 +199,7 @@ public class ReportActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"No Any Transaction",Toast.LENGTH_LONG).show();
                 }
 
-
+                loadingbar.setVisibility(View.GONE);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -375,6 +390,25 @@ public class ReportActivity extends AppCompatActivity {
         tYear = c.get(Calendar.YEAR);
         tMonth = c.get(Calendar.MONTH)+1;
         tDay = c.get(Calendar.DAY_OF_MONTH);
+    }
+    private void moveDashBoard() {
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        moveDashBoard();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                moveDashBoard();
+                break;
+        }
+        return true;
     }
 
 }

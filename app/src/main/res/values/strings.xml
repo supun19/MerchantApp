@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MerchantApp</string>
+    <string name="app_name">DirectPay MerchantApp</string>
     <string name="login_hint">password</string>
     <string name="forget_password">Forgot Password?</string>
     <string name="login">LOGIN</string>

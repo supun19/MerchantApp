@@ -62,6 +62,16 @@ public class Api {
         editor.putString("nic", nic);
         editor.apply();
     }
+    public static void setMerchantActivate(Context context,boolean active){
+        SharedPreferences.Editor editor = context.getSharedPreferences(String.valueOf(R.string.register), context.MODE_PRIVATE).edit();
+        editor.putBoolean("activate", active);
+        editor.apply();
+    }
+    public static boolean isMerchantActivate(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(String.valueOf(R.string.register), Context.MODE_PRIVATE);
+        boolean token =sharedPref.getBoolean("activate",true);
+        return token;
+    }
     public static boolean reSetPin(Context context){
         SharedPreferences.Editor editor = context.getSharedPreferences(String.valueOf(R.string.register), context.MODE_PRIVATE).edit();
 

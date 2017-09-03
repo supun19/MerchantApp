@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.directpay.paymedia.merchantapp.Component.VolleyCallback;
 import com.directpay.paymedia.merchantapp.Services.Api;
 import com.directpay.paymedia.merchantapp.Services.Parameter;
+import com.directpay.paymedia.merchantapp.Services.SecurityHandler;
 import com.directpay.paymedia.merchantapp.Services.VolleyRequestHandlerApi;
 
 import org.json.JSONArray;
@@ -32,7 +34,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SecurityHandler.handleSSLHandshake();
         setContentView(R.layout.activity_change_password);
+
+        if (getSupportActionBar() != null) {
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            //populateScanList();
+
+        }
 
         current_password = (EditText) findViewById(R.id.current_password);
         password = (EditText) findViewById(R.id.password);
@@ -134,5 +145,26 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                moveSetting();
+                break;
+        }
+        return true;
+    }
+
+    private void moveSetting() {
+        Intent intent = new Intent(this,SettingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        moveSetting();
     }
 }

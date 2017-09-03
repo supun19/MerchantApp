@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                btn_login.setEnabled(false);
                 login();
 
             }
@@ -185,12 +185,15 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        btn_login.setEnabled(true);
+
     }
 
     private void moveDashboard() {
 
         Intent intent = new Intent(this,DashboardActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void showError(TextInputLayout passField) {
