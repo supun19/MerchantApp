@@ -55,7 +55,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search By Account"
+                android:hint="SearchByName"
+                android:textSize="14sp"
                 android:id="@+id/search_box"
                 android:focusableInTouchMode="true"
 

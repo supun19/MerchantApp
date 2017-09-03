@@ -1,5 +1,6 @@
 package com.directpay.paymedia.merchantapp.Model;
 
+import android.renderscript.Sampler;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -19,6 +20,8 @@ public class MerchantTransactionModel {
     private String fromAccountNumber;
     private String toAccountNumber;
     private String amount;
+    private String recievedAmount;
+    private String commission;
     private String date;
     private Merchant merchant;
     private String recieptNumber;
@@ -47,6 +50,8 @@ public class MerchantTransactionModel {
         try {
 
             this.amount = object.getString("originalAmount");
+            this.recievedAmount = object.getString("receivingAmount");
+            this.commission = String.valueOf((Double.parseDouble(this.amount)-Double.parseDouble(this.recievedAmount)));
             JSONObject date = object.getJSONObject("dateTime");
             this.recieptNumber = object.getString("id");
             this.status = object.getString("status");
@@ -143,6 +148,22 @@ public class MerchantTransactionModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getRecievedAmount() {
+        return recievedAmount;
+    }
+
+    public void setRecievedAmount(String recievedAmount) {
+        this.recievedAmount = recievedAmount;
+    }
+
+    public String getCommission() {
+        return commission;
+    }
+
+    public void setCommission(String commission) {
+        this.commission = commission;
     }
 
     public User getUser() {

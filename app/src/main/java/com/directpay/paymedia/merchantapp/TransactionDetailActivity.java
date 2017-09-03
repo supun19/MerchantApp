@@ -28,6 +28,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private String recieptNumber;
     private String name;
     private String amount;
+    private String recievedAmount;
+    private String commission;
     private String date;
     private String type;
     private String status;
@@ -57,6 +59,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
         type = intent.getStringExtra("type");
         status = intent.getStringExtra("status");
         merchantId = intent.getStringExtra("merchantId");
+        recievedAmount = intent.getStringExtra("receivingAmount");
+        commission = intent.getStringExtra("commission");
 
         Log.d("recieptNumber",recieptNumber);
         Log.d("name",name);
@@ -72,13 +76,17 @@ public class TransactionDetailActivity extends AppCompatActivity {
         TextView dateView = (TextView) findViewById(R.id.date);
         TextView typeView = (TextView) findViewById(R.id.type);
         TextView statusView = (TextView) findViewById(R.id.status);
+        TextView receivedAmountView = (TextView) findViewById(R.id.receivedAmount);
+        TextView commissionView = (TextView) findViewById(R.id.commission);
 
         recieptView.setText(recieptNumber);
         nameView.setText(name);
-        amountView.setText(amount);
-        dateView.setText(date);
+        amountView.setText(amount+" LKR");
+        dateView.setText(date );
         typeView.setText(type);
         statusView.setText(status);
+        receivedAmountView.setText(recievedAmount +" LKR");
+        commissionView.setText(commission +" LKR");
 
         Button button_void = (Button)findViewById(R.id.button_void);
         if(type.equals("refund") || status.equals("void")){

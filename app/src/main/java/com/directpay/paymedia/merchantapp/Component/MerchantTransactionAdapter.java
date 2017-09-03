@@ -123,12 +123,13 @@ public class MerchantTransactionAdapter extends ArrayAdapter<MerchantTransaction
 
             for (int i = 0; i < count; i++) {
                 MerchantTransactionModel model = list.get(i);
-                if(model.isAppUserAccount_isFromAccountNuber()){
-                    filterableString = list.get(i).getToAccountNumber();
-                }
-                else {
-                    filterableString = list.get(i).getFromAccountNumber();
-                }
+                filterableString = list.get(i).getUser().getLastName();
+//                if(model.isAppUserAccount_isFromAccountNuber()){
+//                    filterableString = list.get(i).getToAccountNumber();
+//                }
+//                else {
+//                    filterableString = list.get(i).getFromAccountNumber();
+//                }
 
                 if (filterableString.toLowerCase().contains(filterString)) {
                     nlist.add(model);

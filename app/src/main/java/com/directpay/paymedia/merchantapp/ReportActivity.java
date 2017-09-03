@@ -266,6 +266,8 @@ public class ReportActivity extends AppCompatActivity {
                 intent.putExtra("type",model.getType());
                 intent.putExtra("status",model.getStatus());
                 intent.putExtra("merchantId",model.getMerchant().getId());
+                intent.putExtra("receivingAmount",model.getRecievedAmount());
+                intent.putExtra("commission",model.getCommission());
                 startActivity(intent);
 
             }
