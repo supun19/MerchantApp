@@ -1,7 +1,11 @@
 package com.directpay.paymedia.merchantapp;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -35,6 +39,11 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private String status;
     private String merchantId;
 
+
+    private View mProgressView;
+
+    Button button_void;
+
     int width_dp;
     int height_dp;
     @Override
@@ -52,6 +61,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
         }
 
         final Intent intent = getIntent();
+
+        mProgressView = findViewById(R.id.login_progress);;
         recieptNumber = intent.getStringExtra("receipt");
         name = intent.getStringExtra("name");
         amount = intent.getStringExtra("amount");
@@ -88,7 +99,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
         receivedAmountView.setText(recievedAmount +" LKR");
         commissionView.setText(commission +" LKR");
 
-        Button button_void = (Button)findViewById(R.id.button_void);
+        button_void = (Button)findViewById(R.id.button_void);
         if(type.equals("refund") || status.equals("void")){
             button_void.setVisibility(View.GONE);
         }
@@ -96,6 +107,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
             button_void.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    button_void.setEnabled(false);
+                    showProgress(true);
                     refundTransaction(merchantId,recieptNumber);
 
 
@@ -128,6 +141,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject result) {
                 Log.d("transactionAdapt",result.toString());
+                showProgress(false);
+
                 moveMerchantTransactionReport();
 
             }
@@ -184,5 +199,37 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+//            mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//            mFormView.animate().setDuration(shortAnimTime).alpha(
+//                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+//                }
+//            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//            mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 }
