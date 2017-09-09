@@ -25,6 +25,10 @@ import com.directpay.paymedia.merchantapp.Services.VolleyRequestHandlerApi;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 public class TransactionDetailActivity extends AppCompatActivity {
 
@@ -38,7 +42,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
     private String type;
     private String status;
     private String merchantId;
-
+    private String userAccountNumber;
+    private String merchantAccountNumber;
+    private String userPhoneNumber;
+    private String merchantPhoneNumber;
 
     private View mProgressView;
 
@@ -72,6 +79,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
         merchantId = intent.getStringExtra("merchantId");
         recievedAmount = intent.getStringExtra("receivingAmount");
         commission = intent.getStringExtra("commission");
+        userAccountNumber = intent.getStringExtra("userAccount");
+        merchantAccountNumber = intent.getStringExtra("merchantAccount");
+        userPhoneNumber= intent.getStringExtra("userPhone");
+        merchantPhoneNumber= intent.getStringExtra("merchantPhone");
 
         Log.d("recieptNumber",recieptNumber);
         Log.d("name",name);
@@ -142,7 +153,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
             public void onSuccess(JSONObject result) {
                 Log.d("transactionAdapt",result.toString());
                 showProgress(false);
-
+                sendSMS();
                 moveMerchantTransactionReport();
 
             }
@@ -158,6 +169,30 @@ public class TransactionDetailActivity extends AppCompatActivity {
             }
         }, Parameter.urlVoidTransaction, Api.getAccessToken(getApplicationContext()),payload,getApplicationContext());
     }
+
+    private void sendSMS() {
+
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String fdate = null;
+        try {
+            fdate = dateFormat.format( dateFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
+        String payerMsg = " DirectPay - Refund Successful "+amount+" paid to User "+ userAccountNumber.substring(userAccountNumber.length()-3, userAccountNumber.length())+" on "+fdate;
+
+        String payeeMsg = " DirectPay - Merchant Pay Service - Refund Successful "+amount+" made to Merchant "+merchantAccountNumber.substring(merchantAccountNumber.length()-3,merchantAccountNumber.length())+ " on "+fdate+" Thank you for using DirectPay";
+        //String payerMsg = "DirectPay - Merchant Pay Service - Payment Successful "+amount+" made to Merchant "+userAccountNumber.substring(userAccountNumber.length()-3,userAccountNumber.length())+" on "+date;
+        Log.d("userPhoneNumber",userPhoneNumber);
+        Log.d("merchantPhoneNumber",merchantPhoneNumber);
+        Api.sendSms(userPhoneNumber, payerMsg,getApplicationContext());
+        Api.sendSms(merchantPhoneNumber, payeeMsg,getApplicationContext());
+    }
+
     public void moveLogin(){
 
         Intent myIntent = new Intent(this, LoginActivity.class);

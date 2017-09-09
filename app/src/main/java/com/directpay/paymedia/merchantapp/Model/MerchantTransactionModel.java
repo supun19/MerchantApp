@@ -73,9 +73,11 @@ public class MerchantTransactionModel {
 
                     this.merchant = new Merchant(payerDetail.getString("id"));
                     this.merchant.setMerchantName(payerDetail.getString("merchantName"));
+                    this.merchant.setPhoneNumber(payerDetail.getString("phoneNumber"));
                     this.user = new User();
                     this.user.setFirstname(payeeDetaildata.getString("firstName"));
                     this.user.setLastName(payeeDetaildata.getString("lastName"));
+                    this.user.setPhoneNumber(payeeDetail.getString("phoneNumber"));
 
 
 
@@ -93,9 +95,11 @@ public class MerchantTransactionModel {
 
                     this.merchant = new Merchant(payeeDetail.getString("id"));
                     this.merchant.setMerchantName(payeeDetail.getString("merchantName"));
+                    this.merchant.setPhoneNumber(payeeDetail.getString("phoneNumber"));
                     this.user = new User();
                     this.user.setFirstname(payerDetaildata.getString("firstName"));
                     this.user.setLastName(payerDetaildata.getString("lastName"));
+                    this.user.setPhoneNumber(payerDetail.getString("phoneNumber"));
 
 
                 }

@@ -254,10 +254,10 @@ public class ReportActivity extends AppCompatActivity {
 //                Log.d("Merchant",""+model.getMerchant().getId()+"");
                 intent.putExtra("receipt",model.getRecieptNumber());
                 if(model.isAppUserAccount_isFromAccountNuber()){
-                    intent.putExtra("name",model.getToAccountNumber());
+                    intent.putExtra("name",model.getUser().getLastName());
                 }
                 else{
-                    intent.putExtra("name",model.getFromAccountNumber());
+                    intent.putExtra("name",model.getUser().getLastName());
 
                 }
 
@@ -268,6 +268,10 @@ public class ReportActivity extends AppCompatActivity {
                 intent.putExtra("merchantId",model.getMerchant().getId());
                 intent.putExtra("receivingAmount",model.getRecievedAmount());
                 intent.putExtra("commission",model.getCommission());
+                intent.putExtra("userAccount", model.getToAccountNumber());
+                intent.putExtra("merchantAccount",model.getFromAccountNumber());
+                intent.putExtra("userPhone",model.getUser().getPhoneNumber());
+                intent.putExtra("merchantPhone",model.getMerchant().getPhoneNumber());
                 startActivity(intent);
 
             }

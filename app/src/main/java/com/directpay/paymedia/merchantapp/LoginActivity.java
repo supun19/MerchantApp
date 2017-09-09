@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isEnterdValideLoginData()){
             Log.d("...login data validate.","");
             JSONObject params = getLoginCredential();
-
+            Log.d("login:",params.toString());
             VolleyRequestHandlerApi.api(new VolleyCallback(){
                 @Override
                 public void onSuccess(JSONObject result){
