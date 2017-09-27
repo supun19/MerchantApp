@@ -94,7 +94,7 @@
                     android:text="@string/forget_password"
                     android:gravity="right"
                     android:textStyle="bold"
-                    android:onClick="forgetPassword()"
+
                     android:id="@+id/foreget_p"
                     android:layout_marginBottom="8dp"
                     android:textColor="@color/colorPrimary"

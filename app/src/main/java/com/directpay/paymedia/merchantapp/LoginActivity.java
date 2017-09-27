@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.directpay.paymedia.merchantapp.Component.VolleyCallback;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passField;
     private EditText nicField;
     private Button btn_login;
-
+    private TextView forgetPasswordText;
     private String password;
     private String nic;
 
@@ -52,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
         passLayout = (TextInputLayout) findViewById(R.id.pinErr);
         nicLayout = (TextInputLayout) findViewById(R.id.nic_error);
+
+        forgetPasswordText = (TextView) findViewById(R.id.foreget_p);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +68,13 @@ public class LoginActivity extends AppCompatActivity {
             nicField.setVisibility(View.GONE);
             nicLayout.setVisibility(View.GONE);
         }
+
+        forgetPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                forgetPassword();
+            }
+        });
 
     }
 
@@ -185,6 +195,10 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        else if(!result.has("data")){
+            Toast.makeText(getApplicationContext(), "Wrong Password",
+                    Toast.LENGTH_LONG).show();
+        }
         btn_login.setEnabled(true);
 
     }
@@ -253,6 +267,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    private void forgetPassword(){
 
     }
 }
