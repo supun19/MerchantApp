@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         passLayout = (TextInputLayout) findViewById(R.id.pinErr);
         nicLayout = (TextInputLayout) findViewById(R.id.nic_error);
 
-        forgetPasswordText = (TextView) findViewById(R.id.foreget_p);
+        //forgetPasswordText = (TextView) findViewById(R.id.foreget_p);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,12 +69,12 @@ public class LoginActivity extends AppCompatActivity {
             nicLayout.setVisibility(View.GONE);
         }
 
-        forgetPasswordText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                forgetPassword();
-            }
-        });
+//        forgetPasswordText.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                forgetPassword();
+//            }
+//        });
 
     }
 
@@ -270,6 +270,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     private void forgetPassword(){
-
+        Intent intent = new Intent(this,forgotPasswordActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -38,7 +38,8 @@
         <activity android:name=".TransactionDetailActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".ChangeUserActivity"></activity>
+        <activity android:name=".ChangeUserActivity" />
+        <activity android:name=".forgotPasswordActivity"></activity>
     </application>
 
 </manifest>

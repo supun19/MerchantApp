@@ -37,6 +37,7 @@ public class Parameter {
     public static String urlUserRole = apim+"/merchantpay/1.0.0/default/user/role";
     public static String urlResendPin = apim+"/merchantpay/1.0.0/resend/pin";
     public static String urlForgotPassword = apim+"/merchantpay/1.0.0/forgot/password";
+    public static String urlMerchantForgotPassword = apim+"/merchantpay/1.0.0/merchant/forgot/password";
     public static String urlMerchantChangePassword = apim+"/merchantpay/1.0.0/merchant/change/password";
     public static String urlMerchantChangeUsername = apim+"/merchantpay/1.0.0/merchant/change/username";
     public static String  urlMerchantLogin = apim+"/merchantpay/1.0.0/merchant/login";

@@ -79,6 +79,13 @@ public class Api {
         editor.apply();
         return true;
     }
+
+    public static String getId(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(String.valueOf(R.string.register), Context.MODE_PRIVATE);
+        String token = sharedPref.getString("id", null);
+
+        return token;
+    }
     public static String getRegisterId(Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(String.valueOf(R.string.register), Context.MODE_PRIVATE);
         String token =sharedPref.getString("register_id",null);
