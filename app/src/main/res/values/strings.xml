@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DirectPay MerchantApp</string>
+    <string name="action_logout">Log Out</string>
     <string name="login_hint">Password</string>
     <string name="login_hint2">Confirm Password</string>
     <string name="forget_password">Forgot Password?</string>
