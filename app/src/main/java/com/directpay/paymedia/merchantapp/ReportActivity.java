@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -39,6 +40,8 @@ import java.util.Calendar;
 
 public class ReportActivity extends AppCompatActivity {
 
+    boolean flag;
+    private int page=1;
     private int headersize;
     private Button btn_load;
     private TextView text_from_date;
@@ -54,9 +57,10 @@ public class ReportActivity extends AppCompatActivity {
     private MerchantTransactionAdapter adapter;
     private ListView listView;
     private boolean loadDate;
-
-
     private RelativeLayout loadingbar;
+    private AbsListView.OnScrollListener listScrollListner;
+    private boolean scrollbyfinger;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,8 @@ public class ReportActivity extends AppCompatActivity {
         btn_load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Api.setSave(getApplicationContext(),null);
+                page=1;
                 listView.setAdapter(null);
                 loadingbar.setVisibility(View.VISIBLE);
                 getMerchantTransaction();
@@ -133,14 +139,43 @@ public class ReportActivity extends AppCompatActivity {
         Search();
         currentDate();
 
+        if(Api.isSave(getApplicationContext())) {
+            loadDate=true;
+            JSONArray array= Api.getTransactionHistory(getApplicationContext());
+            populateTransactionList(array);
+        }
+
+        listScrollListner = new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                if(scrollState == SCROLL_STATE_FLING){
+                    scrollbyfinger = true;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+
+                if (!flag && scrollbyfinger) {
+                    flag = true;
+                    scrollbyfinger = false;
+                    page++;
+                    getMerchantTransaction();
+                }
+                Log.d("page", page + "");
+
+            }
+        };
 
 
     }
     public void getMerchantTransaction() {
 
-
         JSONObject parameter = new JSONObject();
         try {
+            parameter.put("page",page);
+            parameter.put("offset",Parameter.offset);
             parameter.put("userId",""+ Api.getRegisterId(getApplicationContext()));
             JSONObject fromdate = new JSONObject();
             fromdate.put("year",fYear);
@@ -188,12 +223,32 @@ public class ReportActivity extends AppCompatActivity {
 
         if(result.has("data")){
             JSONArray array= (JSONArray) result.opt("data");
+
+            if (Api.isSave(getApplicationContext())){
+                JSONArray temp=Api.getTransactionHistory(getApplicationContext());
+                try {
+                    array=concatArray(array,temp);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
             try {
                 if(array.length()!=0){
                     JSONObject jsonObject = array.getJSONObject(0);
                     Log.d("Transaction:Transaction",jsonObject.toString());
+
+                    //save transaction data
+                    Api.setSave(getApplicationContext(),array);
+                    listView.setOnScrollListener(null);
+
                     populateTransactionList(array);
+                    if(Api.isSave(getApplicationContext())){
+                        listView.setOnScrollListener(listScrollListner);
+                    }
                     loadDate=true;
+                    flag=false;
+                    loadingbar.setVisibility(View.GONE);
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"No Any Transaction",Toast.LENGTH_LONG).show();
@@ -221,12 +276,25 @@ public class ReportActivity extends AppCompatActivity {
         }
     }
 
+    public JSONArray concatArray(JSONArray array,JSONArray temp) throws JSONException{
+        JSONArray result=new JSONArray();
+        for(int i=0; i<array.length();i++){
+            result.put(array.get(i));
+        }
+        for(int i=0; i<temp.length();i++){
+            result.put(temp.get(i));
+        }
+        return result;
+    }
+
     public void moveLogin(){
 
         Intent myIntent = new Intent(this, LoginActivity.class);
         startActivity(myIntent);
         finish();
     }
+
+
     private void populateTransactionList(JSONArray transactions) {
         Log.d("Transaction activity",transactions.toString());
         // Construct the data source
@@ -401,6 +469,7 @@ public class ReportActivity extends AppCompatActivity {
         Intent intent = new Intent(this,DashboardActivity.class);
         startActivity(intent);
         finish();
+        Api.setSave(getApplicationContext(),null);
     }
     @Override
     public void onBackPressed() {

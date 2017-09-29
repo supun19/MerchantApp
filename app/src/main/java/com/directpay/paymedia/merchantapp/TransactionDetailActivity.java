@@ -229,8 +229,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
-                moveDashBoard();
+                Intent intent = new Intent(this,ReportActivity.class);
+                startActivity(intent);
                 break;
         }
         return true;

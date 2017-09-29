@@ -7,15 +7,15 @@ package com.directpay.paymedia.merchantapp.Services;
 public class Parameter {
 
     //prod
-//    public static String clientkey= "FXSYUYqymoqIhPrzBJSxfCC2iHQa";
-//    public static String secretkey = "50N3F6NEDxWmyYibVW46k8_jtnga";
-//    public static String identityServer = "https://13.58.144.197:9446";
-//    public static String apim = "https://13.58.144.197:8243";
+    public static String clientkey= "FXSYUYqymoqIhPrzBJSxfCC2iHQa";
+    public static String secretkey = "50N3F6NEDxWmyYibVW46k8_jtnga";
+    public static String identityServer = "https://13.58.144.197:9446";
+    public static String apim = "https://13.58.144.197:8243";
     //dev
-    public static String clientkey= "i8XRnR_jYfpntyN_smyhZQXyr7Qa";
-    public static String secretkey = "VcrOMqj6g0MPT4gj5dM47Zvu4Cwa";
-    public static String identityServer = "https://192.168.8.103:9446";
-    public static String apim = "https://192.168.8.103:8243";
+//    public static String clientkey= "i8XRnR_jYfpntyN_smyhZQXyr7Qa";
+//    public static String secretkey = "VcrOMqj6g0MPT4gj5dM47Zvu4Cwa";
+//    public static String identityServer = "https://192.168.8.103:9446";
+//    public static String apim = "https://192.168.8.103:8243";
 
     //http://10.254.102.141
 //    public static String clientkey= "i8XRnR_jYfpntyN_smyhZQXyr7Qa";
@@ -49,4 +49,7 @@ public class Parameter {
 
     public static String MQTT_BROKER_URL ="tcp://iot.eclipse.org:1883";
 
+    //parameters to limit transaction details
+    public static int page=1;
+    public static int offset=5;
 }
