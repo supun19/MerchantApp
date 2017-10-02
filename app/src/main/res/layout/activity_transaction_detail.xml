@@ -35,13 +35,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="receipt"
+                    android:text="Receipt"
                     android:textSize="14sp"
                     android:layout_marginTop="12dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UserAccount"
+                    android:text="User Account"
                     android:textSize="14sp"
                     android:layout_marginTop="12dp"/>
                 <TextView
@@ -53,13 +53,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ReceivedAmount"
+                    android:text="Received Amount"
                     android:textSize="14sp"
                     android:layout_marginTop="12dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="commission"
+                    android:text="Commission"
                     android:textSize="14sp"
                     android:layout_marginTop="12dp"/>
                 <TextView

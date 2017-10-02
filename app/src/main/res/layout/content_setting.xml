@@ -26,20 +26,20 @@
         android:id="@+id/text_change_username_password"
 
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="change username"
-        android:textSize="18sp"
-        android:padding="16dp"
-        android:gravity="left"
-        android:id="@+id/text_change_username"
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@android:color/black" />-->
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="change username"-->
+        <!--android:textSize="18sp"-->
+        <!--android:padding="16dp"-->
+        <!--android:gravity="left"-->
+        <!--android:id="@+id/text_change_username"-->
 
-        />
+        <!--/>-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -51,7 +51,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="activete merchant"
+            android:text="activate merchant"
             android:textSize="18sp"
             android:padding="16dp"
             android:gravity="left"

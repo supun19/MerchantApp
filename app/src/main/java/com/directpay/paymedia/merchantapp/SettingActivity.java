@@ -45,7 +45,7 @@ public class SettingActivity extends AppCompatActivity {
         }
 
         TextView changePassword = (TextView) findViewById(R.id.text_change_username_password);
-        TextView changeUsername = (TextView) findViewById(R.id.text_change_username);
+//        TextView changeUsername = (TextView) findViewById(R.id.text_change_username);
 
         checkBox_activate = (CheckBox) findViewById(R.id.checkbox_activate_merchant);
         loadingbar = (RelativeLayout) findViewById(R.id.loadingPanel);
@@ -58,14 +58,14 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         });
-        changeUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this,ChangeUserActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        changeUsername.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this,ChangeUserActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         checkBox_activate.setOnClickListener(new View.OnClickListener() {
             @Override
